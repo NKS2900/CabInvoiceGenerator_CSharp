@@ -86,6 +86,21 @@ namespace CabInvoiceGenerator_CSharp
             }
             return new InvoiceSummary(rides.Length, totalFare);
         }
+
+        public void AddRides(string userId, Ride[] rides)
+        {
+            try
+            {
+                rideRepository.AddRide(userId, rides);
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are Null");
+                }
+            }
+        }
         public InvoiceSummary GetInvoiceSummary(String userId)
         {
             try
